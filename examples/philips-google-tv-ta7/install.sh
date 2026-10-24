@@ -3,8 +3,9 @@
 # Safe to run again after editing theme/config.json or the launcher source.
 #   1. disables the setup wizard (its RecoveryActivity otherwise takes Home), unless it owns a saved
 #      Wi-Fi network: Android deletes that network when the wizard is disabled
-#   2. launcher/build-and-install.sh with HOME_KEY_SERVICE=1, so the remote's gear button opens
-#      Settings; it disables the stock launcher on the first run
+#   2. launcher/build-and-install.sh; it disables the stock launcher on the first run. No HomeKeyService:
+#      on this TV its key filtering stops held volume buttons from repeating (see debloat.txt), so the
+#      remote's gear button does nothing and Settings is the launcher's Settings pill
 #   3. tools/theme.sh with theme/ (dock order, greeting, hidden apps)
 #
 # Usage: TV_HOST=192.168.0.10 examples/philips-google-tv-ta7/install.sh
@@ -34,5 +35,5 @@ STOCK=none
 if tv "pm list packages -e com.google.android.apps.tv.launcherx" | grep -q launcherx; then
   STOCK=com.google.android.apps.tv.launcherx
 fi
-STOCK_LAUNCHER=$STOCK HOME_KEY_SERVICE=1 "$ROOT/launcher/build-and-install.sh"
+STOCK_LAUNCHER=$STOCK "$ROOT/launcher/build-and-install.sh"
 "$ROOT/tools/theme.sh" "$HERE/theme"

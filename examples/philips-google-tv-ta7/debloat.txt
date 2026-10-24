@@ -25,8 +25,13 @@
 #   strip everything before the \x89PNG signature.
 # - The remote's Settings (gear) button is scancode 357 (KEY_OPTION) -> KEYCODE_SETTINGS (176), a
 #   global key routed to com.mediatek.tv.service's HotKey GlobalKeyReceiver, which forwarded it to the
-#   stock dashboard. With launcherx disabled it does nothing until HomeKeyService is on
-#   (HOME_KEY_SERVICE=1, no config needed for KEYCODE_SETTINGS). Input and app buttons keep working.
+#   stock dashboard: TvServices injects KEYCODE_NOTIFICATION (83) and SystemUI opens
+#   TOGGLE_NOTIFICATION_HANDLER_PANEL, restricted to config_notificationHandlerPackage (launcherx). With
+#   launcherx disabled the button does nothing. HomeKeyService (HOME_KEY_SERVICE=1) brings it back, but
+#   is left off: while any accessibility service filters keys, the policy consumes volume keys in the
+#   accessibility KeyboardInterceptor, so the dispatcher never repeats them, and this remote sends no
+#   repeats of its own (getevent: one DOWN, one UP). A held volume button then moves one step.
+#   Settings is the launcher's Settings pill. Input and app buttons keep working.
 # - KEYCODE_GUIDE and KEYCODE_NOTIFICATION are global keys of launcherx; this remote does not send them.
 # - setupwraith owned one old saved network (not the one in use), and only that entry was deleted.
 #

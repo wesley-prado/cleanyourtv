@@ -6,7 +6,7 @@ Debloated and given the Clean Your TV launcher on 2026-10-20.
 | File | What it is |
 |---|---|
 | `debloat.txt` | The packages that were disabled, in the batches they were applied, with what each one is and what was kept on purpose |
-| `install.sh` | Builds the launcher, installs it as Home (disabling the setup wizard and the stock launcher), turns on the gear-button fix and pushes `theme/` |
+| `install.sh` | Builds the launcher, installs it as Home (disabling the setup wizard and the stock launcher), and pushes `theme/` |
 | `restore.sh` | Undoes all of it: re-enables every package in `debloat.txt`, gives Home back to the stock Google TV launcher and turns AdGuard DNS off |
 | `theme/config.json` | Dock order, greeting, hidden apps |
 
@@ -27,9 +27,10 @@ Accept the "Allow USB debugging?" prompt on the TV the first time a command conn
 - **Kept**: everything that plays HDMI and the tuner, the input menu, remote pairing, keyboards, Play
   Store and Play Services, firmware updates, and all the streaming apps you use.
 - **Launcher**: `com.gathin.tvhome` is Home. Dock: YouTube, HBO Max, Crunchyroll, CineVS.
-- **Gear button**: the remote's Settings button only worked through the stock launcher, so the
-  launcher's HomeKeyService (an accessibility service) now handles it. If the button stops working,
-  check Settings > Accessibility > "Botão Home" is on, or run `install.sh` again.
+- **Gear button**: the remote's Settings button only worked through the stock launcher, and it does
+  nothing now; open Settings from the launcher's Settings pill. The launcher's HomeKeyService could
+  bring it back, but any accessibility service that filters keys makes a held volume button move one
+  step instead of repeating, so it stays off. Leave Settings > Accessibility > "Botão Home" off.
 - **Private DNS**: `dns.adguard-dns.com`, which blocks ad and tracker domains for the whole TV. It does
   **not** block YouTube ads.
 
@@ -100,7 +101,7 @@ TV_HOST=192.168.0.10 examples/philips-google-tv-ta7/install.sh
 ```
 
 Needs JDK 17+ and the Android SDK (platform 34, build-tools 34) in `~/Android/Sdk`. A reinstall switches
-accessibility services off, and the script turns the gear-button service back on.
+accessibility services off, and the script leaves them off (see Gear button above).
 
 ## Close ADB when you're done
 
